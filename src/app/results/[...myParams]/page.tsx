@@ -1,12 +1,17 @@
 import Gallery from "@/app/components/Gallery";
 
 type Props = {
-    params: {
+    params: Promise<{
         myParams: (string | undefined)[]
-    }
+    }>
 }
 
-export function generateMetadata({ params: { myParams } }: Props) {
+export async function generateMetadata(props: Props) {
+    const params = await props.params;
+
+    const {
+        myParams
+    } = params;
 
     const topic = myParams?.[0] ?? "curated"
     const page = myParams?.[1] ?? "1"
@@ -16,7 +21,12 @@ export function generateMetadata({ params: { myParams } }: Props) {
     }
 }
 
-export default function SearchResults({ params: { myParams } }: Props) {
+export default async function SearchResults(props: Props) {
+    const params = await props.params;
+
+    const {
+        myParams
+    } = params;
 
     const topic = myParams?.[0] ?? "curated"
     const page = myParams?.[1] ?? "1"
